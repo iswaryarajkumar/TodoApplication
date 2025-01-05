@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .task-completed {
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>To-Do List</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input type="text" id="task-input" class="form-control" placeholder="Enter a new task">
+                        </div>
+                        <button id="add-task-btn" class="btn btn-primary btn-block">Add Task</button>
+                        <ul id="task-list" class="list-group mt-3">
+                            <!-- Task items will appear here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Add task functionality
+        const addTaskBtn = document.getElementById("add-task-btn");
+        const taskInput = document.getElementById("task-input");
+        const taskList = document.getElementById("task-list");
+
+        addTaskBtn.addEventListener("click", function () {
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== "") {
+                const taskItem = document.createElement("li");
+                taskItem.classList.add("list-group-item");
+                taskItem.innerHTML = `
+                    <span class="task-text">${taskText}</span>
+                    <button class="btn btn-success btn-sm float-right ml-2 complete-task-btn">Complete</button>
+                    <button class="btn btn-danger btn-sm float-right delete-task-btn">Delete</button>
+                `;
+
+                // Add event listeners for buttons
+                taskItem.querySelector(".delete-task-btn").addEventListener("click", function () {
+                    taskItem.remove();
+                });
+
+                taskItem.querySelector(".complete-task-btn").addEventListener("click", function () {
+                    taskItem.querySelector(".task-text").classList.toggle("task-completed");
+                });
+
+                taskList.appendChild(taskItem);
+                taskInput.value = ""; // Clear the input
+            } else {
+                alert("Please enter a task.");
+            }
+        });
+    </script>
+</body>
+</html>
